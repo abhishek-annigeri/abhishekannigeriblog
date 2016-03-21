@@ -1,0 +1,442 @@
+mysql> create table musician(ssn int,name varchar(20),address varchar(50),ph_no int,primary key(ssn));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc musician;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ssn     | int(11)     | NO   | PRI | 0       |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| ph_no   | int(11)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+mysql> create table instrument(instrument_id int,name varchar(20),musicial_key varchar(20),primary key(instrument_id));
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc instrument;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| instrument_id | int(11)     | NO   | PRI | 0       |       |
+| name          | varchar(20) | YES  |     | NULL    |       |
+| musicial_key  | varchar(20) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+mysql> create table album(album_id int,title varchar(30),format varchar(10),copyright_date date,no_of_songs int,producer int,
+primary key(album_id),Foreign key(producer) references musician(ssn));
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> desc album;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| album_id       | int(11)     | NO   | PRI | 0       |       |
+| title          | varchar(30) | YES  |     | NULL    |       |
+| format         | varchar(10) | YES  |     | NULL    |       |
+| copyright_date | date        | YES  |     | NULL    |       |
+| no_of_songs    | int(11)     | YES  |     | NULL    |       |
+| producer       | int(11)     | YES  | MUL | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+6 rows in set (0.03 sec)
+
+mysql> create table song(song_id int,title varchar(30),author varchar(20),album_id int,
+primary key(song_id),Foreign key(album_id) references album(album_id));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc song;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| song_id  | int(11)     | NO   | PRI | 0       |       |
+| title    | varchar(30) | YES  |     | NULL    |       |
+| author   | varchar(20) | YES  |     | NULL    |       |
+| album_id | int(11)     | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+mysql> create table play(ssn int,instrument_id int,primary key(ssn,instrument_id),
+Foreign key(ssn) references musician(ssn),Foreign key(instrument_id) references instrument(instrument_id));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc play;
++---------------+---------+------+-----+---------+-------+
+| Field         | Type    | Null | Key | Default | Extra |
++---------------+---------+------+-----+---------+-------+
+| ssn           | int(11) | NO   | PRI | 0       |       |
+| instrument_id | int(11) | NO   | PRI | 0       |       |
++---------------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> create table perform(ssn int,song_id int,primary key(ssn,song_id),
+Foreign key(ssn) references musician(ssn),Foreign key(song_id) references song(song_id));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc perform;
++---------+---------+------+-----+---------+-------+
+| Field   | Type    | Null | Key | Default | Extra |
++---------+---------+------+-----+---------+-------+
+| ssn     | int(11) | NO   | PRI | 0       |       |
+| song_id | int(11) | NO   | PRI | 0       |       |
++---------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> insert into musician values(101,'ajay','dharwad',998877600);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into musician values(102,'arun','hubli',998877600);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into musician values(103,'hemant','mysore',998877600);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into musician values(104,'akshay','delhi',998877600);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into musician values(105,'suprit','gadag',998877600);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from musician;
++-----+--------+---------+-----------+
+| ssn | name   | address | ph_no     |
++-----+--------+---------+-----------+
+| 101 | ajay   | dharwad | 998877600 |
+| 102 | arun   | hubli   | 998877600 |
+| 103 | hemant | mysore  | 998877600 |
+| 104 | akshay | delhi   | 998877600 |
+| 105 | suprit | gadag   | 998877600 |
++-----+--------+---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into instrument values(1,'flute','B-Flat');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into instrument values(2,'guitar','C-Flat');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into instrument values(3,'tabla','D-Flat');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into instrument values(4,'drums','B-Flat');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into instrument values(5,'violin','C-Flat');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from instrument;
++---------------+--------+--------------+
+| instrument_id | name   | musicial_key |
++---------------+--------+--------------+
+|             1 | flute  | B-Flat       |
+|             2 | guitar | C-Flat       |
+|             3 | tabla  | D-Flat       |
+|             4 | drums  | B-Flat       |
+|             5 | violin | C-Flat       |
++---------------+--------+--------------+
+5 rows in set (0.02 sec)
+
+
+mysql> insert into album values(301,'ABC','CD','2014-1-20',5,101);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into album values(302,'DEF','DVD','2014-1-21',3,102);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into album values(303,'PQR','MC','2014-1-22',4,103);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into album values(304,'RST','CD','2014-1-22',1,104);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into album values(305,'XYZ','DVD','2014-1-23',2,105);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM album;
++----------+-------+--------+----------------+-------------+----------+
+| album_id | title | format | copyright_date | no_of_songs | producer |
++----------+-------+--------+----------------+-------------+----------+
+|      301 | ABC   | CD     | 2014-01-20     |           5 |      101 |
+|      302 | DEF   | DVD    | 2014-01-21     |           3 |      102 |
+|      303 | PQR   | MC     | 2014-01-22     |           4 |      103 |
+|      304 | RST   | CD     | 2014-01-22     |           1 |      104 |
+|      305 | XYZ   | DVD    | 2014-01-23     |           2 |      105 |
++----------+-------+--------+----------------+-------------+----------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> insert into song values(401,'flair','harsha',301);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into song values(402,'sharp','amogh',301);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into song values(403,'abc2','akshay',302);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into song values(404,'abc1','abhishek',302);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into song values(405,'abc3','basava',302);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into song values(406,'success','karthik',303);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into song values(407,'winner','karthik',303);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into song values(408,'write','karthik',303);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into song values(409,'meter','karthik',303);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into song values(410,'support','arjun',304);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into song values(411,'page','anik',305);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into song values(412,'noticed','anand',305);
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> select * from song;
++---------+---------+----------+----------+
+| song_id | title   | author   | album_id |
++---------+---------+----------+----------+
+|     401 | flair   | harsha   |      301 |
+|     402 | sharp   | amogh    |      301 |
+|     403 | abc2    | akshay   |      302 |
+|     404 | abc1    | abhishek |      302 |
+|     405 | abc3    | basava   |      302 |
+|     406 | success | karthik  |      303 |
+|     407 | winner  | karthik  |      303 |
+|     408 | write   | karthik  |      303 |
+|     409 | meter   | karthik  |      303 |
+|     410 | support | arjun    |      304 |
+|     411 | page    | anik     |      305 |
+|     412 | noticed | anand    |      305 |
++---------+---------+----------+----------+
+12 rows in set (0.01 sec)
+
+
+
+mysql> insert into perform values(101,401);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into perform values(101,402);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into perform values(101,403);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into perform values(101,404);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into perform values(101,405);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into perform values(102,401);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into perform values(102,407);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into perform values(103,410);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into perform values(104,401);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into perform values(105,406);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into perform values(103,406);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into perform values(104,406);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into perform values(102,408);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from perform order by ssn;
++-----+---------+
+| ssn | song_id |
++-----+---------+
+| 101 |     401 |
+| 101 |     402 |
+| 101 |     403 |
+| 101 |     404 |
+| 101 |     405 |
+| 102 |     401 |
+| 102 |     407 |
+| 102 |     408 |
+| 103 |     406 |
+| 103 |     410 |
+| 104 |     401 |
+| 104 |     406 |
+| 105 |     406 |
++-----+---------+
+13 rows in set (0.00 sec)
+
+
+mysql> insert into play values(101,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into play values(101,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into play values(101,3);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into play values(101,4);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into play values(101,5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into play values(102,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into play values(102,5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into play values(103,4);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into play values(103,1);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into play values(104,2);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into play values(104,5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into play values(105,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into play values(105,4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from play order by ssn;
++-----+---------------+
+| ssn | instrument_id |
++-----+---------------+
+| 101 |             1 |
+| 101 |             2 |
+| 101 |             3 |
+| 101 |             4 |
+| 101 |             5 |
+| 102 |             2 |
+| 102 |             5 |
+| 103 |             1 |
+| 103 |             4 |
+| 104 |             2 |
+| 104 |             5 |
+| 105 |             3 |
+| 105 |             4 |
++-----+---------------+
+13 rows in set (0.00 sec)
+
+
+
+Queries:
+
+1: 
+
+mysql>  select m.name,s.title,a.title from musician m,perform p,song s,album a
+    ->  where m.ssn=p.ssn and
+    ->  s.song_id=p.song_id and
+    ->  s.album_id=a.album_id;
+
++--------+---------+-------+
+| name   | title   | title |
++--------+---------+-------+
+| ajay   | flair   | ABC   |
+| ajay   | sharp   | ABC   |
+| ajay   | abc2    | DEF   |
+| ajay   | abc1    | DEF   |
+| ajay   | abc3    | DEF   |
+| arun   | flair   | ABC   |
+| arun   | winner  | PQR   |
+| arun   | write   | PQR   |
+| hemant | success | PQR   |
+| hemant | support | RST   |
+| akshay | flair   | ABC   |
+| akshay | success | PQR   |
+| suprit | success | PQR   |
++--------+---------+-------+
+13 rows in set (0.00 sec)
+
+
+2:
+
+mysql> select * from song where song_id in(select song_id from perform group by song_id having count(song_id)>=3);
+
++---------+---------+---------+----------+
+| song_id | title   | author  | album_id |
++---------+---------+---------+----------+
+|     401 | flair   | harsha  |      301 |
+|     406 | success | karthik |      303 |
++---------+---------+---------+----------+
+2 rows in set (0.33 sec)
+
+
+3:
+
+mysql> select i.instrument_id,i.name,i.musicial_key,count(i.instrument_id)/(select count(*) from musician) as Average from play p,instrument i,musician m 
+where m.ssn=p.ssn and i.instrument_id=p.instrument_id group by i.instrument_id;
++---------------+--------+--------------+---------+
+| instrument_id | name   | musicial_key | Average |
++---------------+--------+--------------+---------+
+|             1 | flute  | B-Flat       |  0.4000 |
+|             2 | guitar | C-Flat       |  0.6000 |
+|             3 | tabla  | D-Flat       |  0.4000 |
+|             4 | drums  | B-Flat       |  0.6000 |
+|             5 | violin | C-Flat       |  0.6000 |
++---------------+--------+--------------+---------+
+5 rows in set (0.00 sec)
+
+
+4: 
+
+
+mysql> select a.title from album a,instrument i,play p where p.instrument_id=i.instrument_id and
+ a.producer=p.ssn and p.ssn in(select producer from album where
+ no_of_songs>(select avg(no_of_songs) from album))) and
+ i.name in('flute','guitar') group by p.ssn having count(p.ssn)=2;
+
++-------+
+| title |
++-------+
+| ABC   |
++-------+
+1 row in set (0.00 sec)
+
+
+
+5:
+
+
+mysql> select m.ssn,m.name,m.address from instrument i,musician m,play p where 
+i.instrument_id=p.instrument_id and 
+m.ssn=p.ssn group by p.ssn having 
+count(i.instrument_id)=(select count(instrument_id) from instrument);
+
++-----+------+---------+
+| ssn | name | address |
++-----+------+---------+
+| 101 | ajay | dharwad |
++-----+------+---------+
+1 row in set (0.00 sec)
