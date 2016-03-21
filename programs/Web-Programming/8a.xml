@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="8a.css" ?>
+
+<student>
+<student-info>Student Information</student-info>
+<s1>
+<usn>USN:1RV13MCA01</usn>
+<name>Name:Abhishek</name>
+<noc>College:RVCE</noc>
+<branch>Branch:MCA</branch>
+<yoj>Year Of Joining:2013</yoj>
+<eid>Email Id:abhishek@gmail.com</eid>
+</s1>
+
+<s2>
+<usn>USN:1RV13MCA06</usn>
+<name>Name:Amoghvarsh.R</name>
+<noc>College:RVCE</noc>
+<branch>Branch:MCA</branch>
+<yoj>Year Of Joining:2013</yoj>
+<eid>Email Id:amoghvarsh@gmail.com</eid>
+</s2>
+
+<s3>
+<usn>USN:1RV13MCA09</usn>
+<name>Name:Deepak.B</name>
+<noc>College:RVCE</noc>
+<branch>Branch:MCA</branch>
+<yoj>Year Of Joining:2013</yoj>
+<eid>Email Id:deepak@gmail.com</eid>
+</s3>
+
+</student>

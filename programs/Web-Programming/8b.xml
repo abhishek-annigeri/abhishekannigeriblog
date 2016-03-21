@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="8b.xsl"?>
+
+<stud>
+<title>Program 8b</title>
+<usn>USN:1RV13MCA01</usn>
+<name>Name:Abhishek</name>
+<coll>College:RVCE</coll>
+<branch>Branch:MCA</branch>
+<yoj>Year Of Joining:2013</yoj>
+<eid>abhishek@gmail.com</eid>
+</stud>

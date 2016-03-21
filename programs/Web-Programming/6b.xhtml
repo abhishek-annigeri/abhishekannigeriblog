@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <title>LAB 6.B</title>
+   <style type="text/css">
+ 
+  .layer1style
+  {
+  text-align:center;
+  border:solid thick black;
+  padding:1em;
+  width:400px;
+  background-color:yellow;
+  position:absolute;
+  top:100px;
+  left:300px;
+  z-index:0;
+  }
+  
+  .layer2style
+  {
+  text-align:center;
+  border:solid thick blue;
+  padding:1em;
+  width:400px;
+  background-color:pink;
+  position:absolute;
+  top:120px;
+  left:320px;
+  z-index:0;
+  }
+  
+  .layer3style
+  {
+  text-align:center;
+  border:solid thick green;
+  padding:1em;
+  width:400px;
+  background-color:white;
+  position:absolute;
+  top:140px;
+  left:340px;
+  z-index:0;
+  }
+  </style>
+  
+  <script type="text/javascript">
+  var toplayer="layer3"
+  function moves(toTop)
+  {
+ var oldTop=document.getElementById(toplayer).style;
+ var newTop=document.getElementById(toTop).style;
+ oldTop.zIndex="0";
+ newTop.zIndex="10";
+ toplayer=document.getElementById(toTop).id;
+ }
+ 
+ </script>
+ 
+ </head> 
+ <body bgcolor="#799624">
+  <h2>Lab 6.B</h2>
+  <hr/>
+  <hr/>
+  <div style="z-index:10;" class="layer1style" id="layer1" onmouseout="moves('layer1')">RVCE
+  </div>
+ 
+ <div style="z-index:0;" class="layer2style" id="layer2" onmouseout="moves('layer2')">MCA
+ </div>
+ <div style="z-index:0;" class="layer3style" id="layer3" onmouseout="moves('layer3')">1ST SEM
+ </div>
+ <script type="text/javascript">
+ </script>
+ </body>
+ </html>

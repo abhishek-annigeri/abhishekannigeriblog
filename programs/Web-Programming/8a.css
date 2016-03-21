@@ -1,0 +1,6 @@
+student-info{display:block;font-style:italic;font-size:200%;}  
+student{display:block;background-color:aqua;font-style:italic;font-size:100%;} 
+s1{display:block;color:blue;} 
+s2{display:block;color:red;} 
+s3{display:block;color:black;}
+usn,name,noc,branch,yoj,eid{display:block;} 
