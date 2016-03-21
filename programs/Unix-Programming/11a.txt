@@ -1,0 +1,3 @@
+Electronics	14
+Mechanics	24
+Computer Sceince	30
