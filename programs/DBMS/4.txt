@@ -1,0 +1,372 @@
+Exercise 4:
+
+mysql> create table doctor(dssn varchar(20) primary key,name varchar(20),speciality varchar(20),yoe varchar(10))engine='INNODB';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc doctor;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| dssn       | varchar(20) | NO   | PRI | NULL    |       |
+| name       | varchar(20) | YES  |     | NULL    |       |
+| speciality | varchar(20) | YES  |     | NULL    |       |
+| yoe        | varchar(10) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+mysql> create table patient(pssn varchar(20) primary key,pname varchar(20),address varchar(50),age int)engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc patient;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| pssn    | varchar(20) | NO   | PRI | NULL    |       |
+| pname   | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| age     | int(11)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table drug(tradename varchar(20) primary key,formula varchar(20))engine='INNODB';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc drug;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| tradename | varchar(20) | NO   | PRI | NULL    |       |
+| formula   | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table pharmacy(name varchar(20) primary key,address varchar(50),city varchar(20),phno bigint)engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc pharmacy;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(20) | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| city    | varchar(20) | YES  |     | NULL    |       |
+| phno    | bigint(20)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table pharmaceutical_co(phname varchar(20) primary key,address varchar(50),city varchar(20),phno bigint)engine='INNODB';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc pharmaceutical_co;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| phname  | varchar(20) | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| city    | varchar(20) | YES  |     | NULL    |       |
+| phno    | bigint(20)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table checks(dssn varchar(20),pssn varchar(20),primary key(dssn,pssn),Foreign key(dssn)references doctor(dssn),Foreign key(pssn)references patien (pssn))engine='INNODB';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc checks;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| dssn  | varchar(20) | NO   | PRI |         |       |
+| pssn  | varchar(20) | NO   | PRI |         |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> create table prescribes(dssn varchar(20),pssn varchar(20),tradename varchar(20),pdate date,quantity int,primary key(dssn,pssn,tradename),Foreign key(dssn)references doctor(dssn),Foreign key(pssn)references patient(pssn),Foreign key(tradename)references drug(tradename))engine='INNODB';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc prescribes;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| dssn      | varchar(20) | NO   | PRI |         |       |
+| pssn      | varchar(20) | NO   | PRI |         |       |
+| tradename | varchar(20) | NO   | PRI |         |       |
+| pdate     | date        | YES  |     | NULL    |       |
+| quantity  | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table sold_by(tradename varchar(20),phname varchar(20),price int,primary key(tradename,phname),Foreign key(phname)references pharmacy(name),Foreign key(tradename)references drug(tradename))engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc sold_by;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| tradename | varchar(20) | NO   | PRI |         |       |
+| phname    | varchar(20) | NO   | PRI |         |       |
+| price     | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table made_by(tradename varchar(20),pcname varchar(20),primary key(tradename,pcname),Foreign key(pcname)references pharmaceutical_co(phname),Foreign key(tradename)references drug(tradename))engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc made_by;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| tradename | varchar(20) | NO   | PRI |         |       |
+| pcname    | varchar(20) | NO   | PRI |         |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table contract(phname varchar(20),pcname varchar(20),start_date date,end_date date,supervisor varchar(20),text varchar(50),primary key(phname,pcname),Foreign key(phname)references pharmacy(name),Foreign key(pcname)references pharmaceutical_co(phname))engine='INNODB';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc contract;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| phname     | varchar(20) | NO   | PRI |         |       |
+| pcname     | varchar(20) | NO   | PRI |         |       |
+| start_date | date        | YES  |     | NULL    |       |
+| end_date   | date        | YES  |     | NULL    |       |
+| supervisor | varchar(20) | YES  |     | NULL    |       |
+| text       | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+
+mysql> show tables;
++--------------------------------+
+| Tables_in_1rv13mca01_exercise4 |
++--------------------------------+
+| checks                         |
+| contract                       |
+| doctor                         |
+| drug                           |
+| made_by                        |
+| patient                        |
+| pharmaceutical_co              |
+| pharmacy                       |
+| prescribes                     |
+| sold_by                        |
++--------------------------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from checks;
++------+------+
+| dssn | pssn |
++------+------+
+| d100 | p200 |
+| d101 | p201 |
+| d102 | p202 |
+| d103 | p203 |
+| d104 | p204 |
+| d100 | p205 |
+| d105 | p205 |
+| d100 | p206 |
+| d101 | p206 |
++------+------+
+9 rows in set (0.00 sec)
+
+mysql> select * from contract;
++-------------+----------+------------+------------+------------+-----------+
+| phname      | pcname   | start_date | end_date   | supervisor | text      |
++-------------+----------+------------+------------+------------+-----------+
+| a.k.store   | cipala   | 2010-03-02 | 2014-09-02 | Anand      | CIPALA    |
+| a.k.store   | score    | 2009-03-02 | 2016-09-07 | Arun       | Score     |
+| agarplus    | rambaxy  | 2009-03-02 | 2016-09-07 | Amogh      | Rambaxy   |
+| k.s.store   | super    | 2007-03-02 | 2012-09-07 | mithun     | super     |
+| medplus     | cipala   | 2010-03-02 | 2013-09-07 | shivu      | medcipala |
+| medplus     | himalaya | 2010-02-03 | 2015-02-09 | Santosh    | Himalaya  |
+| r.s.medical | vicks    | 2009-03-02 | 2012-09-07 | santosh    | vicks     |
++-------------+----------+------------+------------+------------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from doctor;
++------+----------+------------------+------+
+| dssn | name     | speciality       | yoe  |
++------+----------+------------------+------+
+| d100 | Anoop    | Eye Specialist   | 3    |
+| d101 | Bharath  | Eye Specialist   | 4    |
+| d102 | Bhargav  | cardiologist     | 2    |
+| d103 | Niranjan | dermotologist    | 3    |
+| d104 | Halesh   | dentist          | 5    |
+| d105 | Hemant   | child specialist | 5    |
++------+----------+------------------+------+
+6 rows in set (0.00 sec)
+
+mysql> select * from patient;
++------+---------+-----------+------+
+| pssn | pname   | address   | age  |
++------+---------+-----------+------+
+| p200 | santosh | dharwad   |   23 |
+| p201 | anand   | gulbarga  |   24 |
+| p202 | shivu   | hubli     |   25 |
+| p203 | rohit   | gadag     |   23 |
+| p204 | rahul   | bangalore |   24 |
+| p205 | ajay    | mysore    |   20 |
+| p206 | mahesh  | bangalore |   20 |
++------+---------+-----------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from drug;
++-----------+---------+
+| tradename | formula |
++-----------+---------+
+| crocin    | hnoch3  |
+| d-cold    | h2onh2  |
+| d-protein | fe2k6   |
+| nice      | ch3h6o  |
+| revital   | hnoc6   |
+| voline    | chcn0c3 |
++-----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from made_by;
++-----------+----------+
+| tradename | pcname   |
++-----------+----------+
+| crocin    | cipala   |
+| crocin    | himalaya |
+| d-cold    | himalaya |
+| d-protein | himalaya |
+| nice      | himalaya |
+| revital   | himalaya |
+| voline    | himalaya |
+| d-protein | rambaxy  |
+| nice      | score    |
+| voline    | super    |
+| revital   | vicks    |
++-----------+----------+
+11 rows in set (0.00 sec)
+
+mysql> select * from patient;
++------+---------+-----------+------+
+| pssn | pname   | address   | age  |
++------+---------+-----------+------+
+| p200 | santosh | dharwad   |   23 |
+| p201 | anand   | gulbarga  |   24 |
+| p202 | shivu   | hubli     |   25 |
+| p203 | rohit   | gadag     |   23 |
+| p204 | rahul   | bangalore |   24 |
+| p205 | ajay    | mysore    |   20 |
+| p206 | mahesh  | bangalore |   20 |
++------+---------+-----------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from pharmaceutical_co;
++----------+-----------+-----------+-----------+
+| phname   | address   | city      | phno      |
++----------+-----------+-----------+-----------+
+| cipala   | kengeri   | bangalore | 998877000 |
+| himalaya | r.r.nagar | bangalore | 889977000 |
+| rambaxy  | g.r.nagar | mysore    | 997788000 |
+| score    | s.r.nagar | dharwad   | 887799000 |
+| super    | m.n.nagar | hubli     | 887979000 |
+| vicks    | r.s.nagar | gadag     | 887799000 |
++----------+-----------+-----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from pharmacy;
++-------------+-----------+-----------+-----------+
+| name        | address   | city      | phno      |
++-------------+-----------+-----------+-----------+
+| a.k.store   | s.r.nagar | hubli     | 797988000 |
+| agarplus    | g.r.nagar | mysore    | 998877000 |
+| k.s.store   | m.n.nagar | belgaum   | 887980009 |
+| medplus     | kengeri   | bangalore | 889977000 |
+| r.s.medical | r.s.nagar | bangalore | 979788000 |
++-------------+-----------+-----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from prescribes;
++------+------+-----------+------------+----------+
+| dssn | pssn | tradename | pdate      | quantity |
++------+------+-----------+------------+----------+
+| d100 | p200 | crocin    | 2013-03-12 |        6 |
+| d100 | p203 | d-protein | 2013-06-04 |       12 |
+| d100 | p205 | d-cold    | 2013-12-03 |        7 |
+| d101 | p201 | nice      | 2013-04-03 |        8 |
+| d102 | p204 | revital   | 2011-07-08 |        6 |
+| d103 | p205 | voline    | 2012-08-07 |        8 |
++------+------+-----------+------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from sold_by;
++-----------+-------------+-------+
+| tradename | phname      | price |
++-----------+-------------+-------+
+| crocin    | medplus     |   100 |
+| d-cold    | agarplus    |   120 |
+| d-protein | k.s.store   |   140 |
+| nice      | r.s.medical |   160 |
+| revital   | medplus     |   180 |
+| voline    | medplus     |   200 |
++-----------+-------------+-------+
+6 rows in set (0.00 sec)
+
+
+
+
+Queries:
+
+1)
+
+mysql> select distinct(p.pssn),p.pname,p.address,p.age from patient p,checks c,doctor d where d.dssn=c.dssn and p.pssn=c.pssn and p.age=20 and d.speciality='Eye Specialist';
++------+--------+-----------+------+
+| pssn | pname  | address   | age  |
++------+--------+-----------+------+
+| p205 | ajay   | mysore    |   20 |
+| p206 | mahesh | bangalore |   20 |
++------+--------+-----------+------+
+2 rows in set (0.00 sec)
+
+
+2)
+
+mysql> select d.* from doctor d,patient p,prescribes pr where p.pssn=pr.pssn and pr.dssn=d.dssn and YEAR(pr.pdate)=2013 group by pr.dssn having count(pr.pssn)>=2;
++------+-------+----------------+------+
+| dssn | name  | speciality     | yoe  |
++------+-------+----------------+------+
+| d100 | Anoop | Eye Specialist | 3    |
++------+-------+----------------+------+
+1 row in set (0.00 sec)
+
+
+3)
+
+mysql> select p.* from pharmaceutical_co pc,pharmacy p,contract c where p.name=c.phname and pc.phname=c.pcname and p.city=pc.city group by p.name having count(p.name)>=2;
++---------+---------+-----------+-----------+
+| name    | address | city      | phno      |
++---------+---------+-----------+-----------+
+| medplus | kengeri | bangalore | 889977000 |
++---------+---------+-----------+-----------+
+1 row in set (0.00 sec)
+
+
+4)
+mysql> select d.* from drug d,pharmaceutical_co ph,made_by m where m.tradename=d.tradename and ph.phname=m.pcname group by m.tradename having count(m.tradename)=1;
++-----------+---------+
+| tradename | formula |
++-----------+---------+
+| d-cold    | h2onh2  |
+| d-protein | fe2k6   |
+| nice      | ch3h6o  |
+| revital   | hnoc6   |
+| voline    | chcn0c3 |
++-----------+---------+
+5 rows in set (0.00 sec)
+
+
+5)
+mysql> select d.* from pharmaceutical_co p,drug d,made_by m where d.tradename=m.tradename and p.phname=m.pcname group by m.pcname having count(m.pcname)=(select count(*) from pharmaceutical_co);
++-----------+---------+
+| tradename | formula |
++-----------+---------+
+| crocin    | hnoch3  |
++-----------+---------+
+1 row in set (0.00 sec)

@@ -1,0 +1,913 @@
+Creating Tables
+
+mysql> create table production_company(pname varchar(20) primary key,address varchar(50))engine='INNODB';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc production_company;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| pname   | varchar(20) | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table movie(movie_id int primary key,title varchar(20),year int,length varchar(20),geners varchar(20),plat varchar(50),pname varchar(20),Foreign key(pname) references production_company(pname))engine='INNODB';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc movie;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| movie_id | int(11)     | NO   | PRI | NULL    |       |
+| title    | varchar(20) | YES  |     | NULL    |       |
+| year     | int(11)     | YES  |     | NULL    |       |
+| length   | varchar(20) | YES  |     | NULL    |       |
+| geners   | varchar(20) | YES  |     | NULL    |       |
+| plat     | varchar(50) | YES  |     | NULL    |       |
+| pname    | varchar(20) | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> create table actor(actor_id int primary key,name varchar(20),dob date)engine='INNODB';Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc actor;
+
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| actor_id | int(11)     | NO   | PRI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| dob      | date        | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table director(director_id int primary key,name varchar(20),dob date)engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc director;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| director_id | int(11)     | NO   | PRI | NULL    |       |
+| name        | varchar(20) | YES  |     | NULL    |       |
+| dob         | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table acts(actor_id int,movie_id int,role varchar(20),primary key(actor_id,movie_id),Foreign key(movie_id) references movie(movie_id),Foreign key(actor_id) references actor(actor_id))engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc acts;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| actor_id | int(11)     | NO   | PRI | 0       |       |
+| movie_id | int(11)     | NO   | PRI | 0       |       |
+| role     | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table directs(movie_id int,director_id int,primary key(movie_id,director_id),Foreign key(movie_id) references movie(movie_id),Foreign key(director_id) references director(director_id))engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc directs;
++-------------+---------+------+-----+---------+-------+
+| Field       | Type    | Null | Key | Default | Extra |
++-------------+---------+------+-----+---------+-------+
+| movie_id    | int(11) | NO   | PRI | 0       |       |
+| director_id | int(11) | NO   | PRI | 0       |       |
++-------------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+2) Inserting Values
+
+mysql> desc production_company;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| pname   | varchar(20) | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into production_company values('Dharma Productions','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into production_company values('Yash Raj','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into production_company values('J.S.R Films','Bangalore');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into production_company values('D.J Films','Hyderabad');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into production_company values('M.E Films','Chennai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from production_company;
++--------------------+-----------+
+| pname              | address   |
++--------------------+-----------+
+| D.J Films          | Hyderabad |
+| Dharma Productions | Mumbai    |
+| J.S.R Films        | Bangalore |
+| M.E Films          | Chennai   |
+| Yash Raj           | Mumbai    |
++--------------------+-----------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> desc movie;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| movie_id | int(11)     | NO   | PRI | NULL    |       |
+| title    | varchar(20) | YES  |     | NULL    |       |
+| year     | int(11)     | YES  |     | NULL    |       |
+| length   | varchar(20) | YES  |     | NULL    |       |
+| geners   | varchar(20) | YES  |     | NULL    |       |
+| plat     | varchar(50) | YES  |     | NULL    |       |
+| pname    | varchar(20) | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+
+mysql> insert into movie values(100,'Jai Ho',2014,'2hr 10 mins','action','humanity','Yash Raj');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(101,'Ek Tha Tiger',2013,'1hr 2 mins','horror','Nationality','Dharma Productions');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(102,'KKKG',1999,'3hr 5 mins','comedy','humor','J.S.R Films');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(103,'KHNH',2012,'2hr 50mins','romantic','lovestory','D.J Films');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(104,'Stalin',1998,'1hr 15mins','horror','ghost','M.E Films');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(105,'zanjeer',2012,'2hr 15mins','comedy','humor','Dharma Productions');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(106,'war of worlds',2000,'2hr 45mins','horror','ghost','J.S.R Films');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(107,'Hero',1997,'2hr 30mins','action','war','D.J Films');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(108,'zanjeer',1998,'1hr 15mins','comedy','humor','Dharma Productions');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from movie;
++----------+---------------+------+-------------+----------+-------------+--------------------+
+| movie_id | title         | year | length      | geners   | plat        | pname              |
++----------+---------------+------+-------------+----------+-------------+--------------------+
+|      100 | Jai Ho        | 2014 | 2hr 10 mins | action   | humanity    | Yash Raj           |
+|      101 | Ek Tha Tiger  | 2013 | 1hr 2 mins  | horror   | Nationality | Dharma Productions |
+|      102 | KKKG          | 1999 | 3hr 5 mins  | comedy   | humor       | J.S.R Films        |
+|      103 | KHNH          | 2012 | 2hr 50mins  | romantic | lovestory   | D.J Films          |
+|      104 | Stalin        | 1998 | 1hr 15mins  | horror   | ghost       | M.E Films          |
+|      105 | zanjeer       | 2012 | 2hr 15mins  | comedy   | humor       | Dharma Productions |
+|      106 | war of worlds | 2000 | 2hr 45mins  | horror   | ghost       | J.S.R Films        |
+|      107 | Hero          | 1997 | 2hr 30mins  | action   | war         | D.J Films          |
+|      108 | zanjeer       | 1998 | 1hr 15mins  | comedy   | humor       | Dharma Productions |
++----------+---------------+------+-------------+----------+-------------+--------------------+
+9 rows in set (0.00 sec)
+
+mysql> insert into actor values(200,'S.R.K','1985-2-3');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(201,'Salman','1986-3-2');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(202,'Mahesh Babu','1988-4-7');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(203,'Aamir Khan','1987-7-4');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(204,'Mithun Shivu','1987-10-3');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(205,'Hritik Roshan','1988-3-10');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(206,'Ranbir Kapoor','1990-10-2');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from actor;
++----------+---------------+------------+
+| actor_id | name          | dob        |
++----------+---------------+------------+
+|      200 | S.R.K         | 1985-02-03 |
+|      201 | Salman        | 1986-03-02 |
+|      202 | Mahesh Babu   | 1988-04-07 |
+|      203 | Aamir Khan    | 1987-07-04 |
+|      204 | Mithun Shivu  | 1987-10-03 |
+|      205 | Hritik Roshan | 1988-03-10 |
+|      206 | Ranbir Kapoor | 1990-10-02 |
++----------+---------------+------------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> desc director;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| director_id | int(11)     | NO   | PRI | NULL    |       |
+| name        | varchar(20) | YES  |     | NULL    |       |
+| dob         | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into director values(300,'Karan Johar','1985-2-3');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(301,'Dawid Dhawan','1988-7-4');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(302,'Rohit Shetty','1988-4-7');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(303,'Chethan H P','1978-10-4');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(304,'Farah Khan','1972-3-20');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(306,'R.G.V','1965-2-7');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(307,'S.Narayan','1965-9-1');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(308,'Kashinath','1983-7-2');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from director;
++-------------+--------------+------------+
+| director_id | name         | dob        |
++-------------+--------------+------------+
+|         300 | Karan Johar  | 1985-02-03 |
+|         301 | Dawid Dhawan | 1988-07-04 |
+|         302 | Rohit Shetty | 1988-04-07 |
+|         303 | Chethan H P  | 1978-10-04 |
+|         304 | Farah Khan   | 1972-03-20 |
+|         306 | R.G.V        | 1965-02-07 |
+|         307 | S.Narayan    | 1965-09-01 |
+|         308 | Kashinath    | 1983-07-02 |
++-------------+--------------+------------+
+8 rows in set (0.00 sec)
+
+
+
+mysql> desc acts;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| actor_id | int(11)     | NO   | PRI | 0       |       |
+| movie_id | int(11)     | NO   | PRI | 0       |       |
+| role     | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into acts values(200,100,'lead role');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(203,103,'lead role');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(206,106,'lead role');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(201,101,'supporting actor');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(204,104,'supporting actor');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(202,102,'villian');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(205,105,'villian');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from acts;
++----------+----------+------------------+
+| actor_id | movie_id | role             |
++----------+----------+------------------+
+|      200 |      100 | lead role        |
+|      201 |      101 | supporting actor |
+|      202 |      102 | villian          |
+|      203 |      103 | lead role        |
+|      204 |      104 | supporting actor |
+|      205 |      105 | villian          |
+|      206 |      106 | lead role        |
++----------+----------+------------------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> desc directs;
++-------------+---------+------+-----+---------+-------+
+Creating Tables
+
+mysql> create table production_company(pname varchar(20) primary key,address varchar(50))engine='INNODB';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc production_company;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| pname   | varchar(20) | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table movie(movie_id int primary key,title varchar(20),year int,length varchar(20),geners varchar(20),plat varchar(50),pname varchar(20),Foreign key(pname) references production_company(pname))engine='INNODB';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc movie;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| movie_id | int(11)     | NO   | PRI | NULL    |       |
+| title    | varchar(20) | YES  |     | NULL    |       |
+| year     | int(11)     | YES  |     | NULL    |       |
+| length   | varchar(20) | YES  |     | NULL    |       |
+| geners   | varchar(20) | YES  |     | NULL    |       |
+| plat     | varchar(50) | YES  |     | NULL    |       |
+| pname    | varchar(20) | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> create table actor(actor_id int primary key,name varchar(20),dob date)engine='INNODB';Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc actor;
+
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| actor_id | int(11)     | NO   | PRI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| dob      | date        | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table director(director_id int primary key,name varchar(20),dob date)engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc director;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| director_id | int(11)     | NO   | PRI | NULL    |       |
+| name        | varchar(20) | YES  |     | NULL    |       |
+| dob         | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table acts(actor_id int,movie_id int,role varchar(20),primary key(actor_id,movie_id),Foreign key(movie_id) references movie(movie_id),Foreign key(actor_id) references actor(actor_id))engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc acts;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| actor_id | int(11)     | NO   | PRI | 0       |       |
+| movie_id | int(11)     | NO   | PRI | 0       |       |
+| role     | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table directs(movie_id int,director_id int,primary key(movie_id,director_id),Foreign key(movie_id) references movie(movie_id),Foreign key(director_id) references director(director_id))engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc directs;
++-------------+---------+------+-----+---------+-------+
+| Field       | Type    | Null | Key | Default | Extra |
++-------------+---------+------+-----+---------+-------+
+| movie_id    | int(11) | NO   | PRI | 0       |       |
+| director_id | int(11) | NO   | PRI | 0       |       |
++-------------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+2) Inserting Values
+
+mysql> desc production_company;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| pname   | varchar(20) | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into production_company values('Dharma Productions','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into production_company values('Yash Raj','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into production_company values('J.S.R Films','Bangalore');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into production_company values('D.J Films','Hyderabad');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into production_company values('M.E Films','Chennai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from production_company;
++--------------------+-----------+
+| pname              | address   |
++--------------------+-----------+
+| D.J Films          | Hyderabad |
+| Dharma Productions | Mumbai    |
+| J.S.R Films        | Bangalore |
+| M.E Films          | Chennai   |
+| Yash Raj           | Mumbai    |
++--------------------+-----------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> desc movie;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| movie_id | int(11)     | NO   | PRI | NULL    |       |
+| title    | varchar(20) | YES  |     | NULL    |       |
+| year     | int(11)     | YES  |     | NULL    |       |
+| length   | varchar(20) | YES  |     | NULL    |       |
+| geners   | varchar(20) | YES  |     | NULL    |       |
+| plat     | varchar(50) | YES  |     | NULL    |       |
+| pname    | varchar(20) | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+
+mysql> insert into movie values(100,'Jai Ho',2014,'2hr 10 mins','action','humanity','Yash Raj');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(101,'Ek Tha Tiger',2013,'1hr 2 mins','horror','Nationality','Dharma Productions');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(102,'KKKG',1999,'3hr 5 mins','comedy','humor','J.S.R Films');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(103,'KHNH',2012,'2hr 50mins','romantic','lovestory','D.J Films');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(104,'Stalin',1998,'1hr 15mins','horror','ghost','M.E Films');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(105,'zanjeer',2012,'2hr 15mins','comedy','humor','Dharma Productions');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(106,'war of worlds',2000,'2hr 45mins','horror','ghost','J.S.R Films');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(107,'Hero',1997,'2hr 30mins','action','war','D.J Films');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie values(108,'zanjeer',1998,'1hr 15mins','comedy','humor','Dharma Productions');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from movie;
++----------+---------------+------+-------------+----------+-------------+--------------------+
+| movie_id | title         | year | length      | geners   | plat        | pname              |
++----------+---------------+------+-------------+----------+-------------+--------------------+
+|      100 | Jai Ho        | 2014 | 2hr 10 mins | action   | humanity    | Yash Raj           |
+|      101 | Ek Tha Tiger  | 2013 | 1hr 2 mins  | horror   | Nationality | Dharma Productions |
+|      102 | KKKG          | 1999 | 3hr 5 mins  | comedy   | humor       | J.S.R Films        |
+|      103 | KHNH          | 2012 | 2hr 50mins  | romantic | lovestory   | D.J Films          |
+|      104 | Stalin        | 1998 | 1hr 15mins  | horror   | ghost       | M.E Films          |
+|      105 | zanjeer       | 2012 | 2hr 15mins  | comedy   | humor       | Dharma Productions |
+|      106 | war of worlds | 2000 | 2hr 45mins  | horror   | ghost       | J.S.R Films        |
+|      107 | Hero          | 1997 | 2hr 30mins  | action   | war         | D.J Films          |
+|      108 | zanjeer       | 1998 | 1hr 15mins  | comedy   | humor       | Dharma Productions |
++----------+---------------+------+-------------+----------+-------------+--------------------+
+9 rows in set (0.00 sec)
+
+mysql> insert into actor values(200,'S.R.K','1985-2-3');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(201,'Salman','1986-3-2');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(202,'Mahesh Babu','1988-4-7');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(203,'Aamir Khan','1987-7-4');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(204,'Mithun Shivu','1987-10-3');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(205,'Hritik Roshan','1988-3-10');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into actor values(206,'Ranbir Kapoor','1990-10-2');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from actor;
++----------+---------------+------------+
+| actor_id | name          | dob        |
++----------+---------------+------------+
+|      200 | S.R.K         | 1985-02-03 |
+|      201 | Salman        | 1986-03-02 |
+|      202 | Mahesh Babu   | 1988-04-07 |
+|      203 | Aamir Khan    | 1987-07-04 |
+|      204 | Mithun Shivu  | 1987-10-03 |
+|      205 | Hritik Roshan | 1988-03-10 |
+|      206 | Ranbir Kapoor | 1990-10-02 |
++----------+---------------+------------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> desc director;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| director_id | int(11)     | NO   | PRI | NULL    |       |
+| name        | varchar(20) | YES  |     | NULL    |       |
+| dob         | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into director values(300,'Karan Johar','1985-2-3');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(301,'Dawid Dhawan','1988-7-4');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(302,'Rohit Shetty','1988-4-7');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(303,'Chethan H P','1978-10-4');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(304,'Farah Khan','1972-3-20');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(306,'R.G.V','1965-2-7');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(307,'S.Narayan','1965-9-1');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into director values(308,'Kashinath','1983-7-2');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from director;
++-------------+--------------+------------+
+| director_id | name         | dob        |
++-------------+--------------+------------+
+|         300 | Karan Johar  | 1985-02-03 |
+|         301 | Dawid Dhawan | 1988-07-04 |
+|         302 | Rohit Shetty | 1988-04-07 |
+|         303 | Chethan H P  | 1978-10-04 |
+|         304 | Farah Khan   | 1972-03-20 |
+|         306 | R.G.V        | 1965-02-07 |
+|         307 | S.Narayan    | 1965-09-01 |
+|         308 | Kashinath    | 1983-07-02 |
++-------------+--------------+------------+
+8 rows in set (0.00 sec)
+
+
+
+mysql> desc acts;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| actor_id | int(11)     | NO   | PRI | 0       |       |
+| movie_id | int(11)     | NO   | PRI | 0       |       |
+| role     | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into acts values(200,100,'lead role');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(203,103,'lead role');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(206,106,'lead role');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(201,101,'supporting actor');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(204,104,'supporting actor');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(202,102,'villian');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into acts values(205,105,'villian');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from acts;
++----------+----------+------------------+
+| actor_id | movie_id | role             |
++----------+----------+------------------+
+|      200 |      100 | lead role        |
+|      201 |      101 | supporting actor |
+|      202 |      102 | villian          |
+|      203 |      103 | lead role        |
+|      204 |      104 | supporting actor |
+|      205 |      105 | villian          |
+|      206 |      106 | lead role        |
++----------+----------+------------------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> desc directs;
++-------------+---------+------+-----+---------+-------+
+| Field       | Type    | Null | Key | Default | Extra |
++-------------+---------+------+-----+---------+-------+
+| movie_id    | int(11) | NO   | PRI | 0       |       |
+| director_id | int(11) | NO   | PRI | 0       |       |
++-------------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into directs values(100,300);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(101,301);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(102,302);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(103,303);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(104,304);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(105,306);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(106,306);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(107,307);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(108,308);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(103,300);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(103,304);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(105,302);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(105,304);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from directs;
++----------+-------------+
+| movie_id | director_id |
++----------+-------------+
+|      100 |         300 |
+|      103 |         300 |
+|      101 |         301 |
+|      102 |         302 |
+|      105 |         302 |
+|      103 |         303 |
+|      103 |         304 |
+|      104 |         304 |
+|      105 |         304 |
+|      105 |         306 |
+|      106 |         306 |
+|      107 |         307 |
+|      108 |         308 |
++----------+-------------+
+13 rows in set (0.00 sec)
+
+
+
+Quries:
+
+mysql> select m.* from movie m,directs d where m.movie_id=d.movie_id and m.geners='horror' and m.year=2012 group by d.movie_id having count(d.director_id)>=2;
++----------+-------+------+------------+--------+-----------+-----------+
+| movie_id | title | year | length     | geners | plat      | pname     |
++----------+-------+------+------------+--------+-----------+-----------+
+|      103 | KHNH  | 2012 | 2hr 50mins | horror | lovestory | D.J Films |
++----------+-------+------+------------+--------+-----------+-----------+
+1 row in set (0.00 sec)
+
+
+mysql> select a.* from movie m,actor a,acts ac where a.actor_id=ac.actor_id and m.movie_id=ac.movie_id and title in(select title from movie where year>=2012) and year <=2000;
++----------+---------------+------------+
+| actor_id | name          | dob        |
++----------+---------------+------------+
+|      206 | Ranbir Kapoor | 1990-10-02 |
++----------+---------------+------------+
+1 row in set (0.00 sec)
+
+
+mysql>  select pc.* from production_company pc,movie m where pc.pname=m.pname group by m.pname having count(m.movie_id)>= ALL(select count(*) from movie group by pname);
++--------------------+---------+
+| pname              | address |
++--------------------+---------+
+| Dharma Productions | Mumbai  |
++--------------------+---------+
+1 row in set (0.00 sec)
+
+
+
+mysql> select m.* from movie m,actor a,director d,directs db,acts ac where m.movie_id=db.movie_id and a.actor_id=ac.actor_id and d.director_id=db.director_id and m.movie_id=ac.movie_id and a.dob=d.dob;
++----------+--------+------+-------------+--------+----------+-------------+
+| movie_id | title  | year | length      | geners | plat     | pname       |
++----------+--------+------+-------------+--------+----------+-------------+
+|      100 | Jai Ho | 2014 | 2hr 10 mins | action | humanity | Yash Raj    |
+|      102 | KKKG   | 1999 | 3hr 5 mins  | comedy | humor    | J.S.R Films |
++----------+--------+------+-------------+--------+----------+-------------+
+2 rows in set (0.00 sec)
+
+
+mysql> select d.*,m.pname from director d,directs db,movie m where d.director_id=db.director_id and m.movie_id=db.movie_id and m.pname='Dharma Productions' group by (db.movie_id)=(select count(*) from movie where pname='Dharma Productions');
++-------------+--------------+------------+--------------------+
+| director_id | name         | dob        | pname              |
++-------------+--------------+------------+--------------------+
+|         301 | Dawid Dhawan | 1988-07-04 | Dharma Productions |
++-------------+--------------+------------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from directs db;
++----------+-------------+
+| movie_id | director_id |
++----------+-------------+
+|      100 |         300 |
+|      103 |         300 |
+|      101 |         301 |
+|      105 |         301 |
+|      108 |         301 |
+|      102 |         302 |
+|      105 |         302 |
+|      103 |         303 |
+|      103 |         304 |
+|      104 |         304 |
+|      105 |         304 |
+|      105 |         306 |
+|      106 |         306 |
+|      107 |         307 |
+|      108 |         308 |
++----------+-------------+
+15 rows in set (0.00 sec)
+
+| Field       | Type    | Null | Key | Default | Extra |
++-------------+---------+------+-----+---------+-------+
+| movie_id    | int(11) | NO   | PRI | 0       |       |
+| director_id | int(11) | NO   | PRI | 0       |       |
++-------------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into directs values(100,300);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(101,301);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(102,302);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(103,303);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(104,304);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(105,306);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(106,306);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(107,307);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(108,308);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(103,300);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(103,304);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(105,302);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into directs values(105,304);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from directs;
++----------+-------------+
+| movie_id | director_id |
++----------+-------------+
+|      100 |         300 |
+|      103 |         300 |
+|      101 |         301 |
+|      102 |         302 |
+|      105 |         302 |
+|      103 |         303 |
+|      103 |         304 |
+|      104 |         304 |
+|      105 |         304 |
+|      105 |         306 |
+|      106 |         306 |
+|      107 |         307 |
+|      108 |         308 |
++----------+-------------+
+13 rows in set (0.00 sec)
+
+
+
+Quries:
+
+mysql> select m.* from movie m,directs d where m.movie_id=d.movie_id and m.geners='horror' and m.year=2012 group by d.movie_id having count(d.director_id)>=2;
++----------+-------+------+------------+--------+-----------+-----------+
+| movie_id | title | year | length     | geners | plat      | pname     |
++----------+-------+------+------------+--------+-----------+-----------+
+|      103 | KHNH  | 2012 | 2hr 50mins | horror | lovestory | D.J Films |
++----------+-------+------+------------+--------+-----------+-----------+
+1 row in set (0.00 sec)
+
+
+mysql> select a.* from movie m,actor a,acts ac where a.actor_id=ac.actor_id and m.movie_id=ac.movie_id and title in(select title from movie where year>=2012) and year <=2000;
++----------+---------------+------------+
+| actor_id | name          | dob        |
++----------+---------------+------------+
+|      206 | Ranbir Kapoor | 1990-10-02 |
++----------+---------------+------------+
+1 row in set (0.00 sec)
+
+
+mysql>  select pc.* from production_company pc,movie m where pc.pname=m.pname group by m.pname having count(m.movie_id)>= ALL(select count(*) from movie group by pname);
++--------------------+---------+
+| pname              | address |
++--------------------+---------+
+| Dharma Productions | Mumbai  |
++--------------------+---------+
+1 row in set (0.00 sec)
+
+
+
+mysql> select m.* from movie m,actor a,director d,directs db,acts ac where m.movie_id=db.movie_id and a.actor_id=ac.actor_id and d.director_id=db.director_id and m.movie_id=ac.movie_id and a.dob=d.dob;
++----------+--------+------+-------------+--------+----------+-------------+
+| movie_id | title  | year | length      | geners | plat     | pname       |
++----------+--------+------+-------------+--------+----------+-------------+
+|      100 | Jai Ho | 2014 | 2hr 10 mins | action | humanity | Yash Raj    |
+|      102 | KKKG   | 1999 | 3hr 5 mins  | comedy | humor    | J.S.R Films |
++----------+--------+------+-------------+--------+----------+-------------+
+2 rows in set (0.00 sec)
+
+
+mysql> select d.*,m.pname from director d,directs db,movie m where d.director_id=db.director_id and m.movie_id=db.movie_id and m.pname='Dharma Productions' group by (db.movie_id)=(select count(*) from movie where pname='Dharma Productions');
++-------------+--------------+------------+--------------------+
+| director_id | name         | dob        | pname              |
++-------------+--------------+------------+--------------------+
+|         301 | Dawid Dhawan | 1988-07-04 | Dharma Productions |
++-------------+--------------+------------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from directs db;
++----------+-------------+
+| movie_id | director_id |
++----------+-------------+
+|      100 |         300 |
+|      103 |         300 |
+|      101 |         301 |
+|      105 |         301 |
+|      108 |         301 |
+|      102 |         302 |
+|      105 |         302 |
+|      103 |         303 |
+|      103 |         304 |
+|      104 |         304 |
+|      105 |         304 |
+|      105 |         306 |
+|      106 |         306 |
+|      107 |         307 |
+|      108 |         308 |
++----------+-------------+
+15 rows in set (0.00 sec)
+
+

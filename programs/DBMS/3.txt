@@ -1,0 +1,637 @@
+mysql> create table bank(bank_id int,name varchar(20),address varchar(50),phno bigint,primary key(bank_id))engine='INNODB';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc bank;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| bank_id | int(11)     | NO   | PRI | 0       |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| phno    | bigint(20)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table branch(branch_code int,name varchar(20),address varchar(50),phno bigint,city varchar(20),bank_id int,primary key(branch_code),Foreign key(bank_id) references bank(bank_id))engine='INNODB';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc branch;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| branch_code | int(11)     | NO   | PRI | 0       |       |
+| name        | varchar(20) | YES  |     | NULL    |       |
+| address     | varchar(50) | YES  |     | NULL    |       |
+| phno        | bigint(20)  | YES  |     | NULL    |       |
+| city        | varchar(20) | YES  |     | NULL    |       |
+| bank_id     | int(11)     | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> create table customer(ssn int,name varchar(20),address varchar(50),age int,phno bigint,primary key(ssn))engine='INNODB';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ssn     | int(11)     | NO   | PRI | 0       |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| age     | int(11)     | YES  |     | NULL    |       |
+| phno    | bigint(20)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table loan(loan_no int,duration varchar(20),rate float,type varchar(20),amt float,branch_code int,primary key(loan_no),Foreign key(branch_code) references branch(branch_code))engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc loan;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| loan_no     | int(11)     | NO   | PRI | 0       |       |
+| duration    | varchar(20) | YES  |     | NULL    |       |
+| rate        | float       | YES  |     | NULL    |       |
+| type        | varchar(20) | YES  |     | NULL    |       |
+| amt         | float       | YES  |     | NULL    |       |
+| branch_code | int(11)     | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> create table account(acc_no int,type varchar(20),balance float,branch_code int,primary key(acc_no),Foreign key(branch_code) references branch(branch_code))engine='INNODB';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc account;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| acc_no      | int(11)     | NO   | PRI | 0       |       |
+| type        | varchar(20) | YES  |     | NULL    |       |
+| balance     | float       | YES  |     | NULL    |       |
+| branch_code | int(11)     | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table owns(acc_no int,ssn int,primary key(acc_no,ssn),Foreign key(acc_no) references account(acc_no),Foreign key(ssn) references customer(ssn))engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc owns;
++--------+---------+------+-----+---------+-------+
+| Field  | Type    | Null | Key | Default | Extra |
++--------+---------+------+-----+---------+-------+
+| acc_no | int(11) | NO   | PRI | 0       |       |
+| ssn    | int(11) | NO   | PRI | 0       |       |
++--------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table takes(loan_no int,ssn int,primary key(loan_no,ssn),Foreign key(loan_no) references loan(loan_no),Foreign key(ssn) references customer(ssn))engine='INNODB';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc takes;
++---------+---------+------+-----+---------+-------+
+| Field   | Type    | Null | Key | Default | Extra |
++---------+---------+------+-----+---------+-------+
+| loan_no | int(11) | NO   | PRI | 0       |       |
+| ssn     | int(11) | NO   | PRI | 0       |       |
++---------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> show tables;
++--------------------------------+
+| Tables_in_1rv13mca01_exercise3 |
++--------------------------------+
+| account                        |
+| bank                           |
+| branch                         |
+| customer                       |
+| loan                           |
+| owns                           |
+| takes                          |
++--------------------------------+
+7 rows in set (0.00 sec)
+
+mysql> desc bank;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| bank_id | int(11)     | NO   | PRI | 0       |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| phno    | bigint(20)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into bank values(102,'corporation','dharwad',0836223344);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into bank values(103,'HDFC','hubli',0836332244);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into bank values(104,'ICICI','gadag',0837232244);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into bank values(105,'Indian Bank','belgaum',0831232244);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from bank;
++---------+-------------+-----------+-----------+
+| bank_id | name        | address   | phno      |
++---------+-------------+-----------+-----------+
+|     101 | SBI         | Bangalore |  80223344 |
+|     102 | corporation | dharwad   | 836223344 |
+|     103 | HDFC        | hubli     | 836332244 |
+|     104 | ICICI       | gadag     | 837232244 |
+|     105 | Indian Bank | belgaum   | 831232244 |
++---------+-------------+-----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> desc branch;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| branch_code | int(11)     | NO   | PRI | 0       |       |
+| name        | varchar(20) | YES  |     | NULL    |       |
+| address     | varchar(50) | YES  |     | NULL    |       |
+| phno        | bigint(20)  | YES  |     | NULL    |       |
+| city        | varchar(20) | YES  |     | NULL    |       |
+| bank_id     | int(11)     | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> insert into branch values(201,'SBI Kengeri','8th Mile',080223344,'Bangalore',101);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into branch values(202,'Corp Dwd','S.R.Nagar',0836223344,'dharwad',102);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into branch values(203,'HDFC RLY','J.G.Nagar',0836223344,'hubli',103);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into branch values(204,'ICICI gdg','K.L.Nagar',08372223344,'gadag',104);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into branch values(205,'IB blgm','R.S.Nagar',08312223344,'belgaum',105);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into branch values(206,'SBI south','R.R.Nagar',0807223344,'Bangalore',101);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from branch;
++-------------+-------------+-----------+------------+-----------+---------+
+| branch_code | name        | address   | phno       | city      | bank_id |
++-------------+-------------+-----------+------------+-----------+---------+
+|         201 | SBI Kengeri | 8th Mile  |   80223344 | Bangalore |     101 |
+|         202 | Corp Dwd    | S.R.Nagar |  836223344 | dharwad   |     102 |
+|         203 | HDFC RLY    | J.G.Nagar |  836223344 | hubli     |     103 |
+|         204 | ICICI gdg   | K.L.Nagar | 8372223344 | gadag     |     104 |
+|         205 | IB blgm     | R.S.Nagar | 8312223344 | belgaum   |     105 |
+|         206 | SBI south   | R.R.Nagar |  807223344 | Bangalore |     101 |
++-------------+-------------+-----------+------------+-----------+---------+
+6 rows in set (0.00 sec)
+
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ssn     | int(11)     | NO   | PRI | 0       |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| age     | int(11)     | YES  |     | NULL    |       |
+| phno    | bigint(20)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+mysql> insert into customer values(301,'abhishek','bangalore',22,9988776000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(302,'arun','dharwad',23,7788996000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(303,'amogh','belgaum',22,8877996000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(304,'mithun','shimoga',24,9986100310);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(305,'akshay','belur',23,7979882210);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from customer;
++-----+----------+-----------+------+------------+
+| ssn | name     | address   | age  | phno       |
++-----+----------+-----------+------+------------+
+| 301 | abhishek | bangalore |   22 | 9988776000 |
+| 302 | arun     | dharwad   |   23 | 7788996000 |
+| 303 | amogh    | belgaum   |   22 | 8877996000 |
+| 304 | mithun   | shimoga   |   24 | 9986100310 |
+| 305 | akshay   | belur     |   23 | 7979882210 |
++-----+----------+-----------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> desc account;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| acc_no      | int(11)     | NO   | PRI | 0       |       |
+| type        | varchar(20) | YES  |     | NULL    |       |
+| balance     | float       | YES  |     | NULL    |       |
+| branch_code | int(11)     | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into account values(401,'joint',10000,201);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into account values(402,'savings',9000,201);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into account values(403,'current',8000,203);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into account values(404,'joint',7000,204);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into account values(405,'saving',11000,205);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into account values(406,'current',12000,206);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from account;
++--------+---------+---------+-------------+
+| acc_no | type    | balance | branch_code |
++--------+---------+---------+-------------+
+|    401 | joint   |   10000 |         201 |
+|    402 | savings |    9000 |         201 |
+|    403 | current |    8000 |         203 |
+|    404 | joint   |    7000 |         204 |
+|    405 | saving  |   11000 |         205 |
+|    406 | current |   12000 |         206 |
++--------+---------+---------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> desc loan;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| loan_no     | int(11)     | NO   | PRI | 0       |       |
+| duration    | varchar(20) | YES  |     | NULL    |       |
+| rate        | float       | YES  |     | NULL    |       |
+| type        | varchar(20) | YES  |     | NULL    |       |
+| amt         | float       | YES  |     | NULL    |       |
+| branch_code | int(11)     | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> insert into loan values(501,'5 months',12,'Home loan',100000,201);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into loan values(502,'1 year',10,'car4 loan',200000,202);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into loan values(503,'6 months',15,'student loan',300000,203);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into loan values(504,'9 months',9,'Gold loan',50000,204);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into loan values(505,'2 years',10,'Home loan',40000,205);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into loan values(506,'3 years',12,'Personal loan',70000,206);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from loan;
++---------+----------+------+---------------+--------+-------------+
+| loan_no | duration | rate | type          | amt    | branch_code |
++---------+----------+------+---------------+--------+-------------+
+|     501 | 5 months |   12 | Home loan     | 100000 |         201 |
+|     502 | 1 year   |   10 | car4 loan     | 200000 |         202 |
+|     503 | 6 months |   15 | student loan  | 300000 |         203 |
+|     504 | 9 months |    9 | Gold loan     |  50000 |         204 |
+|     505 | 2 years  |   10 | Home loan     |  40000 |         205 |
+|     506 | 3 years  |   12 | Personal loan |  70000 |         206 |
++---------+----------+------+---------------+--------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> desc owns;
++--------+---------+------+-----+---------+-------+
+| Field  | Type    | Null | Key | Default | Extra |
++--------+---------+------+-----+---------+-------+
+| acc_no | int(11) | NO   | PRI | 0       |       |
+| ssn    | int(11) | NO   | PRI | 0       |       |
++--------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into owns values(401,301);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into owns values(401,302);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into owns values(404,304);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into owns values(404,305);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into owns values(402,303);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from owns;
++--------+-----+
+| acc_no | ssn |
++--------+-----+
+|    401 | 301 |
+|    401 | 302 |
+|    402 | 303 |
+|    404 | 304 |
+|    404 | 305 |
++--------+-----+
+5 rows in set (0.00 sec)
+
+mysql> insert into takes values(501,301);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into takes values(502,302);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into takes values(503,303);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into takes values(504,304);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into takes values(505,305);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from takes;;
++---------+-----+
+| loan_no | ssn |
++---------+-----+
+|     501 | 301 |
+|     502 | 302 |
+|     503 | 303 |
+|     504 | 304 |
+|     505 | 305 |
++---------+-----+
+5 rows in set (0.00 sec)
+
+ERROR: 
+No query specified
+
+mysql> select * from takes;
++---------+-----+
+| loan_no | ssn |
++---------+-----+
+|     501 | 301 |
+|     502 | 302 |
+|     503 | 303 |
+|     504 | 304 |
+|     505 | 305 |
++---------+-----+
+5 rows in set (0.00 sec)
+ 
+mysql> select * from customer;
++-----+----------+-----------+------+------------+
+| ssn | name     | address   | age  | phno       |
++-----+----------+-----------+------+------------+
+| 301 | abhishek | bangalore |   22 | 9988776000 |
+| 302 | arun     | dharwad   |   23 | 7788996000 |
+| 303 | amogh    | belgaum   |   22 | 8877996000 |
+| 304 | mithun   | shimoga   |   24 | 9986100310 |
+| 305 | akshay   | belur     |   23 | 7979882210 |
++-----+----------+-----------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from owns;
++--------+-----+
+| acc_no | ssn |
++--------+-----+
+|    401 | 301 |
+|    401 | 302 |
+|    402 | 303 |
+|    404 | 304 |
+|    404 | 305 |
++--------+-----+
+5 rows in set (0.00 sec)
+
+
+mysql> select acc_no from owns group by acc_no having count(acc_no)>=2;
++--------+
+| acc_no |
++--------+
+|    401 |
+|    404 |
++--------+
+2 rows in set (0.00 sec)
+
+1.  mysql> select c.* from customer c,owns o where c.ssn=o.ssn and o.acc_no in(select acc_no from owns group by acc_no having count(acc_no)>=2);
++-----+----------+-----------+------+------------+
+| ssn | name     | address   | age  | phno       |
++-----+----------+-----------+------+------------+
+| 301 | abhishek | bangalore |   22 | 9988776000 |
+| 302 | arun     | dharwad   |   23 | 7788996000 |
+| 304 | mithun   | shimoga   |   24 | 9986100310 |
+| 305 | akshay   | belur     |   23 | 7979882210 |
++-----+----------+-----------+------+------------+
+4 rows in set (0.00 sec)
+
+
+
+mysql> select * from bank;
++---------+-------------+-----------+-----------+
+| bank_id | name        | address   | phno      |
++---------+-------------+-----------+-----------+
+|     101 | SBI         | Bangalore |  80223344 |
+|     102 | corporation | dharwad   | 836223344 |
+|     103 | HDFC        | hubli     | 836332244 |
+|     104 | ICICI       | gadag     | 837232244 |
+|     105 | Indian Bank | belgaum   | 831232244 |
++---------+-------------+-----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from branch;
++-------------+-------------+-----------+------------+-----------+---------+
+| branch_code | name        | address   | phno       | city      | bank_id |
++-------------+-------------+-----------+------------+-----------+---------+
+|         201 | SBI Kengeri | 8th Mile  |   80223344 | Bangalore |     101 |
+|         202 | Corp Dwd    | S.R.Nagar |  836223344 | dharwad   |     102 |
+|         203 | HDFC RLY    | J.G.Nagar |  836223344 | hubli     |     103 |
+|         204 | ICICI gdg   | K.L.Nagar | 8372223344 | gadag     |     104 |
+|         205 | IB blgm     | R.S.Nagar | 8312223344 | belgaum   |     105 |
+|         206 | SBI south   | R.R.Nagar |  807223344 | Bangalore |     101 |
++-------------+-------------+-----------+------------+-----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from customer;
++-----+----------+-----------+------+------------+
+| ssn | name     | address   | age  | phno       |
++-----+----------+-----------+------+------------+
+| 301 | abhishek | bangalore |   22 | 9988776000 |
+| 302 | arun     | dharwad   |   23 | 7788996000 |
+| 303 | amogh    | belgaum   |   22 | 8877996000 |
+| 304 | mithun   | shimoga   |   24 | 9986100310 |
+| 305 | akshay   | belur     |   23 | 7979882210 |
++-----+----------+-----------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from account;
++--------+---------+---------+-------------+
+| acc_no | type    | balance | branch_code |
++--------+---------+---------+-------------+
+|    401 | joint   |   10000 |         201 |
+|    402 | savings |    9000 |         201 |
+|    403 | current |    8000 |         203 |
+|    404 | joint   |    7000 |         204 |
+|    405 | savings |   11000 |         205 |
+|    406 | current |   12000 |         206 |
+|    407 | joint   |    6000 |         202 |
++--------+---------+---------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from loan;
++---------+----------+------+---------------+--------+-------------+
+| loan_no | duration | rate | type          | amt    | branch_code |
++---------+----------+------+---------------+--------+-------------+
+|     501 | 5 months |   12 | Home loan     | 100000 |         201 |
+|     502 | 1 year   |   10 | car4 loan     | 200000 |         202 |
+|     503 | 6 months |   15 | student loan  | 300000 |         203 |
+|     504 | 9 months |    9 | Gold loan     |  50000 |         204 |
+|     505 | 2 years  |   10 | Home loan     |  40000 |         205 |
+|     506 | 3 years  |   12 | Personal loan |  70000 |         201 |
+|     507 | 4 years  |   14 | car loan      |  80000 |         206 |
++---------+----------+------+---------------+--------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from owns;
++--------+-----+
+| acc_no | ssn |
++--------+-----+
+|    401 | 301 |
+|    401 | 302 |
+|    402 | 303 |
+|    407 | 303 |
+|    404 | 304 |
+|    407 | 304 |
+|    404 | 305 |
++--------+-----+
+7 rows in set (0.00 sec)
+
+mysql> select * from takes;
++---------+-----+
+| loan_no | ssn |
++---------+-----+
+|     501 | 301 |
+|     502 | 302 |
+|     503 | 303 |
+|     504 | 304 |
++---------+-----+
+4 rows in set (0.00 sec)
+
+
+1.a)
+
+mysql> select distinct(c.ssn),c.name,c.address,c.age,c.phno from customer c,owns o,takes t where c.ssn=o.ssn and t.ssn=o.ssn and o.acc_no in(select acc_no from owns group by acc_no having count(acc_no)>=2);
++-----+----------+-----------+------+------------+
+| ssn | name     | address   | age  | phno       |
++-----+----------+-----------+------+------------+
+| 301 | abhishek | bangalore |   22 | 9988776000 |
+| 302 | arun     | dharwad   |   23 | 7788996000 |
+| 303 | amogh    | belgaum   |   22 | 8877996000 |
+| 304 | mithun   | shimoga   |   24 | 9986100310 |
++-----+----------+-----------+------+------------+
+4 rows in set (0.00 sec)
+
+
+2.a  mysql> select b.* from branch b,loan l where b.branch_code=l.branch_code and l.amt=(select max(amt) from loan);
++-------------+----------+-----------+-----------+-------+---------+
+| branch_code | name     | address   | phno      | city  | bank_id |
++-------------+----------+-----------+-----------+-------+---------+
+|         203 | HDFC RLY | J.G.Nagar | 836223344 | hubli |     103 |
++-------------+----------+-----------+-----------+-------+---------+
+1 row in set (0.00 sec)
+
+2.b mysql> select count(loan_no) from loan group by branch_code;
++----------------+
+| count(loan_no) |
++----------------+
+|              2 |
+|              1 |
+|              1 |
+|              1 |
+|              1 |
++----------------+
+5 rows in set (0.00 sec)
+
+mysql> select b.* from branch b,loan l where b.branch_code=l.branch_code group by b.branch_code having count(l.loan_no) >= ALL(select count(loan_no) from loan group by branch_code);
++-------------+-------------+----------+----------+-----------+---------+
+| branch_code | name        | address  | phno     | city      | bank_id |
++-------------+-------------+----------+----------+-----------+---------+
+|         201 | SBI Kengeri | 8th Mile | 80223344 | Bangalore |     101 |
++-------------+-------------+----------+----------+-----------+---------+
+1 row in set (0.00 sec)
+
+
+3. mysql> select br.* from branch br,bank b,account a where b.bank_id=br.bank_id and br.branch_code=a.branch_code and b.name='SBI' and br.city='Bangalore' and a.type='savings';
++-------------+-------------+----------+----------+-----------+---------+
+| branch_code | name        | address  | phno     | city      | bank_id |
++-------------+-------------+----------+----------+-----------+---------+
+|         201 | SBI Kengeri | 8th Mile | 80223344 | Bangalore |     101 |
++-------------+-------------+----------+----------+-----------+---------+
+1 row in set (0.00 sec)
+
+
+4. mysql> select b.name as Bank_Name,br.name as Branch_Name,sum(l.amt) as Total_amount from bank b,branch br,loan l where b.bank_id=br.bank_id and br.branch_code=l.branch_code group by br.branch_code;
++-------------+-------------+--------------+
+| Bank_Name   | Branch_Name | Total_amount |
++-------------+-------------+--------------+
+| SBI         | SBI Kengeri |       170000 |
+| corporation | Corp Dwd    |       200000 |
+| HDFC        | HDFC RLY    |       300000 |
+| ICICI       | ICICI gdg   |        50000 |
+| Indian Bank | IB blgm     |        40000 |
++-------------+-------------+--------------+
+5 rows in set (0.00 sec)
+
+4.a
+
+mysql> select b.name as Bank_Name,br.name as Branch_Name,sum(l.amt) as Total_amount from bank b,branch br,loan l where b.bank_id=br.bank_id and br.branch_code=l.branch_code group by br.branch_code;
++-------------+-------------+--------------+
+| Bank_Name   | Branch_Name | Total_amount |
++-------------+-------------+--------------+
+| SBI         | SBI Kengeri |       170000 |
+| corporation | Corp Dwd    |       200000 |
+| HDFC        | HDFC RLY    |       300000 |
+| ICICI       | ICICI gdg   |        50000 |
+| Indian Bank | IB blgm     |        40000 |
+| SBI         | SBI south   |        80000 |
++-------------+-------------+--------------+
+6 rows in set (0.00 sec)
+
+
+5.
+
+mysql> select acc_no from account  where branch_code in(select branch_code from branch where city='Bangalore');
++--------+
+| acc_no |
++--------+
+|    401 |
+|    402 |
+|    406 |
++--------+
+3 rows in set (0.00 sec)
+
+
+mysql> select c.* from customer c,account a,owns o,branch b where o.ssn=c.ssn and o.acc_no=a.acc_no and a.branch_code=b.branch_code and b.city='Bangalore' group by c.ssn having count(c.ssn)=(select count(br.branch_code) from branch br,bank b where b.bank_id=br.bank_id and br.city='Bangalore' and b.name='SBI');
++-----+----------+-----------+------+------------+
+| ssn | name     | address   | age  | phno       |
++-----+----------+-----------+------+------------+
+| 301 | abhishek | bangalore |   22 | 9988776000 |
++-----+----------+-----------+------+------------+
+1 row in set (0.00 sec)
+

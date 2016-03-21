@@ -1,0 +1,324 @@
+Creating Tables
+
+
+
+
+
+
+
+
+
+
+
+1. professor Table
+
+mysql> insert into professor values(100,'rohit',35,'asst.prof','data mining');
+Query OK, 1 row affected (0.35 sec)
+
+mysql> insert into professor values(101,'mahesh',32,'asst.prof','meta data');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professor values(102,'santosh',30,'prof','linked list');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into professor values(103,'shashi',33,'asst.prof','interrupts');
+Query OK, 1 row affected (0.61 sec)
+
+mysql> insert into professor values(104,'shrishail',30,'asst.prof','perl');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from professor;
++--------+-----------+------+-----------+---------------------+
+| profid | name      | age  | rank      | research_specilaity |
++--------+-----------+------+-----------+---------------------+
+|    100 | rohit     |   35 | asst.prof | data mining         |
+|    101 | mahesh    |   32 | asst.prof | meta data           |
+|    102 | santosh   |   30 | prof      | linked list         |
+|    103 | shashi    |   33 | asst.prof | interrupts          |
+|    104 | shrishail |   30 | asst.prof | perl                |
++--------+-----------+------+-----------+---------------------+
+5 rows in set (0.00 sec)
+
+
+2. Project Table
+
+mysql> insert into project values(200,'UGC','2006-10-12','2010-08-15',90000,100);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into project values(201,'AICTE','2008-11-13','2012-06-07',100000,101);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into project values(202,'VTU','2007-02-03','2010-09-18',120000,102);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into project values(203,'RCUB','2009-01-02','2012-03-05',80000,103);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into project values(204,'UGC','2010-03-05','2013-04-06',70000,104);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * from project;
++------------+--------------+---------------+-------------+--------+--------+
+| project_no | sponsor_name | starting_date | ending_date | budget | profid |
++------------+--------------+---------------+-------------+--------+--------+
+|        200 | UGC          | 2006-10-12    | 2010-08-15  |  90000 |    100 |
+|        201 | AICTE        | 2008-11-13    | 2012-06-07  | 100000 |    101 |
+|        202 | VTU          | 2007-02-03    | 2010-09-18  | 120000 |    102 |
+|        203 | RCUB         | 2009-01-02    | 2012-03-05  |  80000 |    103 |
+|        204 | UGC          | 2010-03-05    | 2013-04-06  |  70000 |    104 |
++------------+--------------+---------------+-------------+--------+--------+
+5 rows in set (0.00 sec)
+
+
+3. Student Table
+
+mysql> insert into student values('mca35','kishan',22,'mca',100);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values('mca36','arun',22,'mca',101);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into student values('mca31','anand',23,'b.e',102);
+Query OK, 1 row affected (0.56 sec)
+
+mysql> insert into student values('mca33','venkatesh',22,'mca',103);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values('mca34','shivu',22,'mca',104);
+Query OK, 1 row affected (0.24 sec)
+
+mysql> select * from student;
++-------+-----------+------+--------+--------+
+| usn   | name      | age  | degree | profid |
++-------+-----------+------+--------+--------+
+| mca31 | anand     |   23 | b.e    |    102 |
+| mca33 | venkatesh |   22 | mca    |    103 |
+| mca34 | shivu     |   22 | mca    |    104 |
+| mca35 | kishan    |   22 | mca    |    100 |
+| mca36 | arun      |   22 | mca    |    101 |
++-------+-----------+------+--------+--------+
+5 rows in set (0.02 sec)
+
+
+4. Prof_works_on
+
+
+mysql> insert into prof_works_on values(200,100);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into prof_works_on values(201,101);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into prof_works_on values(202,102);
+Query OK, 1 row affected (0.75 sec)
+
+mysql> insert into prof_works_on values(203,103);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into prof_works_on values(204,104);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into prof_works_on values(202,101);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into prof_works_on values(203,101);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into prof_works_on values(201,100);
+Query OK, 1 row affected (0.47 sec)
+
+mysql> insert into prof_works_on values(204,101);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from prof_works_on;
++------------+--------+
+| project_no | profid |
++------------+--------+
+|        200 |    100 |
+|        201 |    100 |
+|        201 |    101 |
+|        202 |    101 |
+|        203 |    101 |
+|        204 |    101 |
+|        202 |    102 |
+|        203 |    103 |
+|        204 |    104 |
++------------+--------+
+9 rows in set (0.00 sec)
+
+
+5 . Stud_works_on
+
+mysql> insert into stud_works_on values('mca35',200);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into stud_works_on values('mca36',201);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_works_on values('mca31',202);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_works_on values('mca33',203);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into stud_works_on values('mca34',204);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++-------+-----------+------+--------+--------+
+| usn   | name      | age  | degree | profid |
++-------+-----------+------+--------+--------+
+| mca31 | anand     |   23 | b.e    |    102 |
+| mca33 | venkatesh |   22 | mca    |    103 |
+| mca34 | shivu     |   22 | mca    |    104 |
+| mca35 | kishan    |   22 | mca    |    100 |
+| mca36 | arun      |   22 | mca    |    101 |
++-------+-----------+------+--------+--------+
+5 rows in set (0.01 sec)
+
+
+mysql> select * from professor;
++--------+-----------+------+-----------+---------------------+
+| profid | name      | age  | rank      | research_specilaity |
++--------+-----------+------+-----------+---------------------+
+|    100 | rohit     |   35 | asst.prof | data mining         |
+|    101 | mahesh    |   32 | asst.prof | meta data           |
+|    102 | santosh   |   30 | prof      | linked list         |
+|    103 | shashi    |   33 | asst.prof | interrupts          |
+|    104 | shrishail |   30 | asst.prof | perl                |
++--------+-----------+------+-----------+---------------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from project;
++------------+--------------+---------------+-------------+--------+--------+
+| project_no | sponsor_name | starting_date | ending_date | budget | profid |
++------------+--------------+---------------+-------------+--------+--------+
+|        200 | UGC          | 2006-10-12    | 2010-08-15  |  90000 |    100 |
+|        201 | AICTE        | 2008-11-13    | 2012-06-07  | 100000 |    101 |
+|        202 | VTU          | 2007-02-03    | 2010-09-18  | 120000 |    102 |
+|        203 | RCUB         | 2009-01-02    | 2012-03-05  |  80000 |    103 |
+|        204 | UGC          | 2010-03-05    | 2013-04-06  |  70000 |    104 |
+|        205 | UGC          | 2013-03-05    | 2015-04-06  |  70000 |    104 |
+|        206 | UGC          | 2006-03-05    | 2010-04-06  |  50000 |    102 |
++------------+--------------+---------------+-------------+--------+--------+
+7 rows in set (0.00 sec)
+
+mysql>  select p.name from professor p,project pr where p.profid=pr.profid and pr.ending_date>(select CURRENT_DATE from dual) and pr.budget<100000;
++-----------+
+| name      |
++-----------+
+| shrishail |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select p.name as Professor_Name,s.name as Student_Name,pr.sponsor_name from professor p,project pr,student s,stud_works_on sw where s.usn=-sw.usn and p.profid=pr.profid and p.profid=s.profid and pr.project_no=sw.project_no;
++----------------+--------------+--------------+
+| Professor_Name | Student_Name | sponsor_name |
++----------------+--------------+--------------+
+| santosh        | anand        | VTU          |
+| shashi         | venkatesh    | RCUB         |
+| shrishail      | shivu        | UGC          |
+| rohit          | kishan       | UGC          |
+| mahesh         | arun         | AICTE        |
++----------------+--------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++-------+-----------+------+--------+--------+
+| usn   | name      | age  | degree | profid |
++-------+-----------+------+--------+--------+
+| mca31 | anand     |   23 | b.e    |    102 |
+| mca33 | venkatesh |   22 | mca    |    103 |
+| mca34 | shivu     |   22 | mca    |    104 |
+| mca35 | kishan    |   22 | mca    |    100 |
+| mca36 | arun      |   22 | mca    |    101 |
++-------+-----------+------+--------+--------+
+5 rows in set (0.01 sec)
+
+mysql> select * from stud_works_on;
++-------+------------+
+| usn   | project_no |
++-------+------------+
+| mca31 |        202 |
+| mca33 |        203 |
+| mca34 |        204 |
+| mca35 |        200 |
+| mca36 |        201 |
++-------+------------+
+5 rows in set (0.04 sec)
+
+mysql> select p.name,sum(pr.budget) as Total_Budget from professor p,project pr where p.profid=pr.profid and YEAR(pr.starting_date)>2005 and YEAR(pr.ending_date)=2010 group by p.name;
++---------+--------------+
+| name    | Total_Budget |
++---------+--------------+
+| rohit   |        90000 |
+| santosh |       170000 |
++---------+--------------+
+2 rows in set (0.01 sec)
+
+mysql> select avg(budget) from project;
++------------------+
+| avg(budget)      |
++------------------+
+| 82857.1428571429 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select p.name,sum(pr.budget) as Total_Budget from professor p,project pr where p.profid=pr.profid group by p.name having sum(pr.budget)>(select avg(budget) from project);
++-----------+--------------+
+| name      | Total_Budget |
++-----------+--------------+
+| mahesh    |       100000 |
+| rohit     |        90000 |
+| santosh   |       170000 |
+| shrishail |       140000 |
++-----------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select p.name,count(pw.profid) from professor p,prof_works_on pw where p.profid=pw.profid group by pw.profid having count(pw.profid)=(select count(*) from project);
++--------+------------------+
+| name   | count(pw.profid) |
++--------+------------------+
+| mahesh |                7 |
++--------+------------------+
+1 row in set (0.01 sec)
+
+mysql> select count(project_no) from project;
++-------------------+
+| count(project_no) |
++-------------------+
+|                 7 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from prof_works_on;
++------------+--------+
+| project_no | profid |
++------------+--------+
+|        200 |    100 |
+|        201 |    100 |
+|        200 |    101 |
+|        201 |    101 |
+|        202 |    101 |
+|        203 |    101 |
+|        204 |    101 |
+|        205 |    101 |
+|        206 |    101 |
+|        202 |    102 |
+|        203 |    103 |
+|        204 |    104 |
++------------+--------+
+12 rows in set (0.00 sec)
+
+mysql> select * from professor;
++--------+-----------+------+-----------+---------------------+
+| profid | name      | age  | rank      | research_specilaity |
++--------+-----------+------+-----------+---------------------+
+|    100 | rohit     |   35 | asst.prof | data mining         |
+|    101 | mahesh    |   32 | asst.prof | meta data           |
+|    102 | santosh   |   30 | prof      | linked list         |
+|    103 | shashi    |   33 | asst.prof | interrupts          |
+|    104 | shrishail |   30 | asst.prof | perl                |
++--------+-----------+------+-----------+---------------------+
+5 rows in set (0.00 sec)
+
