@@ -1,15 +1,5 @@
 Creating Tables
 
-
-
-
-
-
-
-
-
-
-
 1. professor Table
 
 mysql> insert into professor values(100,'rohit',35,'asst.prof','data mining');
@@ -101,7 +91,6 @@ mysql> select * from student;
 
 
 4. Prof_works_on
-
 
 mysql> insert into prof_works_on values(200,100);
 Query OK, 1 row affected (0.01 sec)
