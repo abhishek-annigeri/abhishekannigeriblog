@@ -1,3 +1,9 @@
+# Project Title 
+   * Animate a bicycle / car with given attributes – Morphing from tricycle to car and 
+   * Develop different chart options with the given inputs by applying DDA algorithm –  Triangular  & Empirical distribution
+
+#Programs 
+
 1. Write a program to create a chess board using DDA line algorithm
 
 2. Write a program to implement Bresenham’s line drawing algorithm with all values of slopes
